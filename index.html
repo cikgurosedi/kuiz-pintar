@@ -1,16 +1,249 @@
-
 <!DOCTYPE html>
 <html lang="ms">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuiz Pintar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b63">
+  <meta name="description" content="Kuiz Pintar SMN20193 — latihan asas Elektro Pneumatik dan Elektro Hidraulik.">
+  <title>Kuiz Pintar | SMN20193</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --navy: #123b63;
+      --blue: #1766ae;
+      --ink: #172b40;
+      --muted: #597087;
+      --line: #d6e3ee;
+      --bg: #edf4fa;
+      --success: #116c48;
+      --success-bg: #e4f6ed;
+      --error: #a12f35;
+      --error-bg: #fff0f0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink); }
+    .hero {
+      background: linear-gradient(120deg, #123b63, #1766ae);
+      color: #fff; padding: 34px 18px 70px;
+    }
+    .hero-inner { max-width: 760px; margin: auto; }
+    .eyebrow { font-size: .8rem; font-weight: 750; letter-spacing: .07em; text-transform: uppercase; opacity: .85; }
+    h1 { font-size: clamp(2rem, 7vw, 3rem); margin: 11px 0 4px; line-height: 1.16; }
+    .hero p { line-height: 1.6; opacity: .93; margin: 10px 0 0; }
+    main { max-width: 760px; margin: -38px auto 30px; padding: 0 16px; position: relative; }
+    .panel { background: white; border: 1px solid #dce7f0; border-radius: 20px; box-shadow: 0 15px 35px #1a42651c; padding: clamp(20px, 5vw, 36px); }
+    .pill { display: inline-flex; gap: 8px; align-items: center; background: #e8f1fa; border-radius: 99px; color: var(--navy); padding: 7px 13px; font-weight: 750; font-size: .86rem; }
+    h2 { font-size: clamp(1.4rem, 5vw, 1.9rem); line-height: 1.35; margin: 20px 0 8px; }
+    p { line-height: 1.65; }
+    .sub { color: var(--muted); }
+    .facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+    .fact { padding: 9px 12px; border: 1px solid var(--line); background: #f8fbff; border-radius: 10px; font-size: .9rem; color: #284963; }
+    .btn { width: 100%; padding: 15px 20px; border-radius: 12px; border: 0; font: inherit; font-weight: 750; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+    .btn:active { transform: scale(.99); }
+    .btn:focus-visible, .option:focus-visible { outline: 3px solid #f0a93c; outline-offset: 3px; }
+    .primary { color: #fff; background: var(--blue); }
+    .primary:hover { background: #10538e; }
+    .progress-label { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: .88rem; font-weight: 700; margin-bottom: 10px; }
+    .progress { height: 10px; border-radius: 20px; background: #e3edf5; overflow: hidden; }
+    .progress > span { display: block; height: 100%; width: 0; background: #1a7abf; border-radius: 20px; transition: width .2s ease; }
+    .answers { display: grid; gap: 11px; margin: 25px 0 15px; }
+    .option { background: #f8fbff; color: var(--ink); text-align: left; border: 2px solid #dbe6ef; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; font: inherit; font-size: 1rem; cursor: pointer; line-height: 1.45; width: 100%; }
+    .option:not(:disabled):hover { border-color: #7baad2; background: #f1f7fd; }
+    .option:disabled { cursor: default; opacity: 1; }
+    .letter { display: inline-grid; place-items: center; width: 30px; height: 30px; flex: 0 0 30px; background: #e6eef5; border-radius: 8px; font-weight: 800; }
+    .option.correct { background: var(--success-bg); border-color: #63b58a; }
+    .option.correct .letter { color: var(--success); background: #c8ebd8; }
+    .option.incorrect { background: var(--error-bg); border-color: #dc8c93; }
+    .option.incorrect .letter { color: var(--error); background: #ffdbdd; }
+    .feedback { border-radius: 12px; padding: 14px 15px; margin: 18px 0; line-height: 1.5; }
+    .feedback.good { background: var(--success-bg); color: #15593e; }
+    .feedback.bad { background: var(--error-bg); color: #853036; }
+    .feedback strong { display: block; margin-bottom: 5px; }
+    .result-mark { font-size: 3rem; font-weight: 850; color: var(--blue); margin: 8px 0; }
+    footer { text-align: center; max-width: 760px; margin: 14px auto 28px; padding: 0 18px; color: var(--muted); font-size: .83rem; line-height: 1.5; }
+    [hidden] { display: none !important; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
 </head>
 <body>
-  <h1>Selamat Datang ke Kuiz Pintar</h1>
-  <h2>Elektro Pneumatik dan Elektro Hidraulik</h2>
-  <p>Kursus: SMN20193</p>
-  <p>Jom belajar secara interaktif!</p>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Bahan pembelajaran interaktif</div>
+      <h1>Kuiz Pintar</h1>
+      <p>SMN20193 · Elektro Pneumatik dan Elektro Hidraulik</p>
+    </div>
+  </header>
+  <main>
+    <section class="panel" id="intro" aria-labelledby="intro-title">
+      <span class="pill">✦ Versi latihan</span>
+      <h2 id="intro-title">Jom uji kefahaman!</h2>
+      <p class="sub">Jawab tiga soalan asas berkaitan komponen sistem elektro pneumatik. Setiap soalan mempunyai satu jawapan betul.</p>
+      <div class="facts">
+        <span class="fact">📝 3 soalan contoh</span>
+        <span class="fact">🎯 1 markah setiap soalan</span>
+        <span class="fact">📱 Sesuai untuk telefon</span>
+      </div>
+      <button type="button" class="btn primary" id="start-btn">Mula Kuiz</button>
+    </section>
+
+    <section class="panel" id="quiz" aria-labelledby="question" hidden>
+      <div class="progress-label"><span id="progress-text">Soalan 1 daripada 3</span><span id="score-text">Markah: 0</span></div>
+      <div class="progress" aria-hidden="true"><span id="progress-fill"></span></div>
+      <h2 id="question" tabindex="-1"></h2>
+      <p class="sub">Pilih satu jawapan yang paling tepat.</p>
+      <div class="answers" id="answers" role="group" aria-label="Pilihan jawapan"></div>
+      <div class="feedback" id="feedback" role="status" aria-live="polite" hidden></div>
+      <button type="button" class="btn primary" id="next-btn" hidden>Soalan Seterusnya</button>
+    </section>
+
+    <section class="panel" id="result" aria-labelledby="result-title" hidden>
+      <span class="pill">Kuiz selesai</span>
+      <h2 id="result-title" tabindex="-1">Tahniah kerana mencuba!</h2>
+      <div class="result-mark" id="final-score">0 / 3</div>
+      <p id="result-message" class="sub"></p>
+      <button type="button" class="btn primary" id="retry-btn">Cuba Lagi</button>
+    </section>
+  </main>
+  <footer>Kuiz Pintar · Latihan demonstrasi. Soalan ini contoh asas dan belum disahkan terhadap dokumen silibus rasmi kursus.</footer>
+
+  <script>
+    "use strict";
+    const questions = [
+      {
+        question: "Apakah fungsi utama injap kawalan arah 5/2 dalam sistem pneumatik?",
+        choices: [
+          { id: "a", text: "Mengawal suhu udara" },
+          { id: "b", text: "Mengawal arah aliran udara termampat" },
+          { id: "c", text: "Menyimpan udara termampat" },
+          { id: "d", text: "Menapis bendasing dalam udara" }
+        ],
+        answerId: "b",
+        explanation: "Injap 5/2 mempunyai lima port dan dua kedudukan untuk menukar laluan aliran udara, contohnya bagi mengawal silinder dwitindakan."
+      },
+      {
+        question: "Apakah fungsi solenoid pada injap elektro pneumatik?",
+        choices: [
+          { id: "a", text: "Menukarkan isyarat elektrik kepada tindakan mekanikal" },
+          { id: "b", text: "Menyimpan tekanan udara" },
+          { id: "c", text: "Mengukur suhu minyak" },
+          { id: "d", text: "Menapis udara termampat" }
+        ],
+        answerId: "a",
+        explanation: "Apabila gegelung solenoid dibekalkan arus, medan magnet menghasilkan daya untuk menggerakkan mekanisme injap."
+      },
+      {
+        question: "Komponen manakah menghasilkan gerakan linear menggunakan udara termampat?",
+        choices: [
+          { id: "a", text: "Tolok tekanan (pressure gauge)" },
+          { id: "b", text: "Penapis udara (air filter)" },
+          { id: "c", text: "Injap kawalan aliran (flow control valve)" },
+          { id: "d", text: "Silinder pneumatik" }
+        ],
+        answerId: "d",
+        explanation: "Silinder pneumatik menukarkan tenaga udara termampat kepada pergerakan linear pada rod atau omboh."
+      }
+    ];
+
+    const $ = (id) => document.getElementById(id);
+    const letters = ["A", "B", "C", "D"];
+    let current = 0;
+    let score = 0;
+    let answered = false;
+
+    function shuffle(items) {
+      const copy = items.slice();
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function showQuestion() {
+      answered = false;
+      const q = questions[current];
+      $("progress-text").textContent = `Soalan ${current + 1} daripada ${questions.length}`;
+      $("score-text").textContent = `Markah: ${score}`;
+      $("progress-fill").style.width = `${(current / questions.length) * 100}%`;
+      $("question").textContent = q.question;
+      $("answers").replaceChildren();
+      $("feedback").hidden = true;
+      $("feedback").textContent = "";
+      $("next-btn").hidden = true;
+      $("next-btn").textContent = current === questions.length - 1 ? "Lihat Markah" : "Soalan Seterusnya";
+
+      shuffle(q.choices).forEach((choice, idx) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option";
+        button.dataset.choice = choice.id;
+        const letter = document.createElement("span");
+        letter.className = "letter";
+        letter.textContent = letters[idx];
+        letter.setAttribute("aria-hidden", "true");
+        const answerText = document.createElement("span");
+        answerText.textContent = choice.text;
+        button.append(letter, answerText);
+        button.addEventListener("click", () => choose(choice.id, button));
+        $("answers").appendChild(button);
+      });
+      $("question").focus();
+    }
+
+    function choose(id, selectedButton) {
+      if (answered) return;
+      answered = true;
+      const q = questions[current];
+      const isCorrect = id === q.answerId;
+      if (isCorrect) score++;
+      $("score-text").textContent = `Markah: ${score}`;
+
+      $("answers").querySelectorAll("button").forEach((button) => {
+        button.disabled = true;
+        if (button.dataset.choice === q.answerId) button.classList.add("correct");
+      });
+      if (!isCorrect) selectedButton.classList.add("incorrect");
+
+      const feedback = $("feedback");
+      feedback.className = `feedback ${isCorrect ? "good" : "bad"}`;
+      feedback.replaceChildren();
+      const heading = document.createElement("strong");
+      heading.textContent = isCorrect ? "✓ Betul!" : "✕ Belum tepat.";
+      const details = document.createElement("span");
+      details.textContent = q.explanation;
+      feedback.append(heading, details);
+      feedback.hidden = false;
+      $("next-btn").hidden = false;
+      $("next-btn").focus();
+    }
+
+    function showResult() {
+      $("quiz").hidden = true;
+      $("result").hidden = false;
+      $("final-score").textContent = `${score} / ${questions.length}`;
+      $("result-message").textContent = score === questions.length
+        ? "Hebat! Semua jawapan tepat."
+        : "Teruskan berlatih. Tekan Cuba Lagi untuk mengulang kuiz.";
+      $("result-title").focus();
+    }
+
+    function startQuiz() {
+      current = 0;
+      score = 0;
+      $("intro").hidden = true;
+      $("result").hidden = true;
+      $("quiz").hidden = false;
+      showQuestion();
+    }
+
+    $("start-btn").addEventListener("click", startQuiz);
+    $("retry-btn").addEventListener("click", startQuiz);
+    $("next-btn").addEventListener("click", () => {
+      current++;
+      if (current < questions.length) showQuestion();
+      else showResult();
+    });
+  </script>
 </body>
 </html>
-  
